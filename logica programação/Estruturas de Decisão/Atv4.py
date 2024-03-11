@@ -8,7 +8,7 @@ elif codigoProduto == 2 and order_value > 100:
     net_amount = order_value * 0.95
 elif codigoProduto == 3 and order_value > 500:
     net_amount = order_value * 0.9
-else:,0
+else:
     net_amount = order_value
 
 print("Valor a ser pago: R$", net_amount)

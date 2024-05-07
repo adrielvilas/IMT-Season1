@@ -1,6 +1,10 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package main;
 
+import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     //em certas telas, 16 é bem pouco
     final int scale = 3;
     
-    final int tileSize = originalTileSize * scale;//48x48 tile
+    public final int tileSize = originalTileSize * scale;//48x48 tile
     final int maxScreenCol = 16;//horizontal
     final int maxScreenRow = 12;//vertical
     final int screenWidth = tileSize * maxScreenCol; //768 pixels
@@ -29,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;//Mantém o jogo rodando até forçar a parada
+    Player player = new Player(this, keyH);
     
     //set players default position
     int playerX = 100;
@@ -88,26 +93,15 @@ public class GamePanel extends JPanel implements Runnable {
         
     }
     public void update(){
-        if(keyH.upPressed == true){
-            
-            playerY = playerY - playerSpeed;
-        }
-        else if(keyH.downPressed == true){
-            playerY += playerSpeed;
-        }
-        else if(keyH.leftPressed == true){
-            playerX -= playerSpeed;
-        }
-        else if(keyH.rightPressed == true){
-            playerX += playerSpeed;
-        }
+        player.update();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.white);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        
+        player.draw(g2);
+        
         g2.dispose();
     }
 }
